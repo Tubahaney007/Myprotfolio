@@ -1,0 +1,328 @@
+/**
+ * Portfolio JavaScript - Navigation, Theme Toggle, ScrollSpy & Terminal Chat
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+    // -------------------------------------------------------------------------
+    // 1. THEME MANAGEMENT (Browser Media Query + Local Storage Sync)
+    // -------------------------------------------------------------------------
+    const root = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const savedTheme = localStorage.getItem('portfolio-theme');
+    if (savedTheme) {
+        root.setAttribute('data-theme', savedTheme);
+        updateAllThemeButtons(savedTheme);
+    } else {
+        updateAllThemeButtons(prefersDarkScheme.matches ? 'dark' : 'light');
+    }
+
+    function toggleTheme() {
+        const currentTheme = getCurrentTheme();
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', newTheme);
+        localStorage.setItem('portfolio-theme', newTheme);
+        updateAllThemeButtons(newTheme);
+    }
+
+    if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+    if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+
+    prefersDarkScheme.addEventListener('change', (e) => {
+        if (!localStorage.getItem('portfolio-theme')) {
+            updateAllThemeButtons(e.matches ? 'dark' : 'light');
+        }
+    });
+
+    function getCurrentTheme() {
+        const explicitTheme = root.getAttribute('data-theme');
+        if (explicitTheme) return explicitTheme;
+        return prefersDarkScheme.matches ? 'dark' : 'light';
+    }
+
+    function updateAllThemeButtons(theme) {
+        const isDark = theme === 'dark';
+        const labelText = isDark ? 'Switch to Light Mode' : 'Switch to Night Mode';
+
+        [themeToggleBtn, mobileThemeToggle].forEach((btn) => {
+            if (!btn) return;
+            btn.setAttribute('aria-label', labelText);
+            btn.title = labelText;
+            const label = btn.querySelector('.theme-toggle-label');
+            if (label) {
+                label.textContent = isDark ? 'NIGHT' : 'DAY';
+            }
+        });
+    }
+
+    // -------------------------------------------------------------------------
+    // 2. MOBILE RESPONSIVE VERTICAL NAVBAR DRAWER
+    // -------------------------------------------------------------------------
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+    const verticalNavbar = document.getElementById('vertical-navbar');
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+    const sidebarNavLinks = document.querySelectorAll('.sidebar-nav-link');
+
+    function openMobileMenu() {
+        if (!verticalNavbar) return;
+        verticalNavbar.classList.add('is-open');
+        if (sidebarBackdrop) sidebarBackdrop.classList.add('is-active');
+        if (mobileMenuToggle) {
+            mobileMenuToggle.setAttribute('aria-expanded', 'true');
+            mobileMenuToggle.setAttribute('aria-label', 'Close navigation menu');
+        }
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
+    }
+
+    function closeMobileMenu() {
+        if (!verticalNavbar) return;
+        verticalNavbar.classList.remove('is-open');
+        if (sidebarBackdrop) sidebarBackdrop.classList.remove('is-active');
+        if (mobileMenuToggle) {
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.setAttribute('aria-label', 'Open navigation menu');
+        }
+        document.body.style.overflow = '';
+    }
+
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', () => {
+            const isOpen = verticalNavbar.classList.contains('is-open');
+            if (isOpen) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+    }
+
+    if (sidebarCloseBtn) {
+        sidebarCloseBtn.addEventListener('click', closeMobileMenu);
+    }
+
+    if (sidebarBackdrop) {
+        sidebarBackdrop.addEventListener('click', closeMobileMenu);
+    }
+
+    // Close menu when clicking any nav link
+    sidebarNavLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 991) {
+                closeMobileMenu();
+            }
+        });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && verticalNavbar && verticalNavbar.classList.contains('is-open')) {
+            closeMobileMenu();
+            if (mobileMenuToggle) mobileMenuToggle.focus();
+        }
+    });
+
+    // -------------------------------------------------------------------------
+    // 3. ACCESSIBLE SCROLLSPY (Highlighting Active Nav Link on Scroll)
+    // -------------------------------------------------------------------------
+    const sections = document.querySelectorAll('section[id]');
+
+    function updateActiveNavLink() {
+        const scrollPosition = window.scrollY + 180;
+        let currentSectionId = '';
+
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                currentSectionId = section.getAttribute('id');
+            }
+        });
+
+        // Fallback for near bottom of page
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+            const lastSection = sections[sections.length - 1];
+            if (lastSection) currentSectionId = lastSection.getAttribute('id');
+        }
+
+        if (currentSectionId) {
+            sidebarNavLinks.forEach((link) => {
+                const navTarget = link.getAttribute('data-nav');
+                if (navTarget === currentSectionId) {
+                    link.classList.add('active');
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.classList.remove('active');
+                    link.removeAttribute('aria-current');
+                }
+            });
+        }
+    }
+
+    window.addEventListener('scroll', updateActiveNavLink, { passive: true });
+    updateActiveNavLink();
+
+    // -------------------------------------------------------------------------
+    // 4. INTERACTIVE PIXEL TERMINAL CHAT ASSISTANT
+    // -------------------------------------------------------------------------
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+    const quickChips = document.querySelectorAll('.quick-chip');
+
+    const botKnowledge = {
+        skills: "⚡ Tuba's Core Skills: Python, JavaScript, TypeScript, Flask, React, SQL, Pandas, NumPy, Machine Learning pipelines, REST APIs, Git, and Docker.",
+        projects: "⚔️ Featured Projects:\n1. Smart Traffic Light System (Computer Vision & Python)\n2. Integrated Energy Model for Rural India\n3. Privacy-Preserving Federated AI for Healthcare\n4. Smart PPE IoT Safety Monitor.",
+        education: "🎓 Education: B.E. in Data Science Engineering at Adichunchanagiri Institute of Technology (Secured 73% in 2nd year). Prior: PUC (70%) and SSLC (88%).",
+        contact: "✉️ You can reach Tuba directly at tubahaney93@gmail.com, or connect on LinkedIn (linkedin.com/in/tuba-haney) and GitHub (github.com/tuba-haney)!",
+        resume: "📜 Resume: You can view and download Tuba's complete verified resume right from the hero button or timeline section!",
+        experience: "⏳ Experience: Campus Ambassador at DevTown (engaged 100+ students in hands-on coding bootcamps), and active hackathon contributor."
+    };
+
+    function appendChatMessage(speaker, text, isUser = false) {
+        if (!chatMessages) return;
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-msg ${isUser ? 'user-msg' : 'bot-msg'}`;
+
+        const speakerSpan = document.createElement('span');
+        speakerSpan.className = 'msg-speaker font-pixel';
+        speakerSpan.textContent = `[${speaker}]:`;
+
+        const textP = document.createElement('p');
+        textP.className = 'msg-text';
+        textP.textContent = text;
+
+        msgDiv.appendChild(speakerSpan);
+        msgDiv.appendChild(textP);
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function handleUserInput(query) {
+        const cleanQuery = query.trim().toLowerCase();
+        if (!cleanQuery) return;
+
+        appendChatMessage('YOU', query, true);
+
+        let response = "";
+        if (cleanQuery.includes('skill') || cleanQuery.includes('stack') || cleanQuery.includes('tech')) {
+            response = botKnowledge.skills;
+        } else if (cleanQuery.includes('project') || cleanQuery.includes('work') || cleanQuery.includes('code')) {
+            response = botKnowledge.projects;
+        } else if (cleanQuery.includes('edu') || cleanQuery.includes('college') || cleanQuery.includes('degree')) {
+            response = botKnowledge.education;
+        } else if (cleanQuery.includes('contact') || cleanQuery.includes('email') || cleanQuery.includes('hire') || cleanQuery.includes('touch')) {
+            response = botKnowledge.contact;
+        } else if (cleanQuery.includes('resume') || cleanQuery.includes('cv')) {
+            response = botKnowledge.resume;
+        } else if (cleanQuery.includes('exp') || cleanQuery.includes('ambassador') || cleanQuery.includes('devtown')) {
+            response = botKnowledge.experience;
+        } else if (cleanQuery.includes('hi') || cleanQuery.includes('hello') || cleanQuery.includes('hey')) {
+            response = "Hello there, player! Feel free to ask about my projects, technical skills, or education!";
+        } else {
+            response = `I recorded your query: "${query}". You can also click the quick chips above or reach out via the Contact section below!`;
+        }
+
+        setTimeout(() => {
+            appendChatMessage('TUBA_BOT', response, false);
+        }, 400);
+    }
+
+    if (chatForm && chatInput) {
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = chatInput.value;
+            chatInput.value = '';
+            handleUserInput(val);
+        });
+    }
+
+    quickChips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+            const key = chip.getAttribute('data-msg');
+            if (key) {
+                handleUserInput(key);
+            }
+        });
+    });
+
+    // -------------------------------------------------------------------------
+    // 5. INTERACTIVE SKILLS CATEGORY FILTER
+    // -------------------------------------------------------------------------
+    const skillTabBtns = document.querySelectorAll('.skill-tab-btn');
+    const skillCategoryCards = document.querySelectorAll('.skill-category-card');
+
+    skillTabBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-filter');
+
+            // Update active state on tab buttons
+            skillTabBtns.forEach((b) => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+
+            // Filter cards with smooth visual transition
+            skillCategoryCards.forEach((card) => {
+                const category = card.getAttribute('data-category');
+                if (filter === 'all' || category === filter) {
+                    card.style.display = 'flex';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 20);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 200);
+                }
+            });
+        });
+    });
+
+    // -------------------------------------------------------------------------
+    // 6. INTERACTIVE TIMELINE EVENT FILTER
+    // -------------------------------------------------------------------------
+    const timelineFilterBtns = document.querySelectorAll('.timeline-filter-btn');
+    const timelineEntries = document.querySelectorAll('.timeline-entry');
+
+    timelineFilterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const filterType = btn.getAttribute('data-timeline-filter');
+
+            // Update button active state
+            timelineFilterBtns.forEach((b) => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+
+            // Filter entries
+            timelineEntries.forEach((entry) => {
+                const entryType = entry.getAttribute('data-timeline-type');
+                if (filterType === 'all' || entryType === filterType) {
+                    entry.style.display = 'flex';
+                    setTimeout(() => {
+                        entry.style.opacity = '1';
+                        entry.style.transform = 'translateY(0)';
+                    }, 20);
+                } else {
+                    entry.style.opacity = '0';
+                    entry.style.transform = 'translateY(8px)';
+                    setTimeout(() => {
+                        entry.style.display = 'none';
+                    }, 200);
+                }
+            });
+        });
+    });
+});
+
+

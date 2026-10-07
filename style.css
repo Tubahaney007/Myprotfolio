@@ -1,0 +1,2250 @@
+/* ==========================================================================
+   PORTFOLIO STYLESHEET - PIXEL ART STYLE & DYNAMIC THEMES
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. COLOR PALETTES & THEME VARIABLES
+   Default Light/Day mode, overridden automatically by browser media query 
+   or explicitly via data-theme attribute.
+   -------------------------------------------------------------------------- */
+:root {
+    /* Day / Light Mode Palette */
+    --theme: "light";
+    --bg-page: #fdfaf6;
+    --text-primary: #1e1b2e;
+    --text-secondary: #4a4563;
+    --text-muted: #746d8d;
+    
+    /* Pixel UI Colors */
+    --pixel-black: #121020;
+    --pixel-white: #ffffff;
+    --pixel-card-bg: rgba(255, 255, 255, 0.94);
+    --pixel-dialog-bg: #fffdfa;
+    --pixel-border-color: #1e1b2e;
+    --pixel-shadow-color: #2a2438;
+    --pixel-bevel-light: #ffffff;
+    --pixel-bevel-dark: #cfc6d9;
+
+    /* Accent & Arcade Highlights */
+    --color-accent-gold: #ffb800;
+    --color-accent-pink: #ff3377;
+    --color-accent-cyan: #00bcd4;
+    --color-accent-green: #10b981;
+    --color-accent-purple: #7928ca;
+
+    /* Hero Background & Overlays */
+    --hero-bg-overlay: linear-gradient(
+        135deg, 
+        rgba(255, 240, 225, 0.65) 0%, 
+        rgba(255, 220, 200, 0.55) 50%, 
+        rgba(240, 245, 255, 0.70) 100%
+    );
+    --hero-scanline-opacity: 0.08;
+    --hero-title-shadow: 4px 4px 0px #ff3377, 8px 8px 0px #1e1b2e;
+    
+    /* Header & Nav */
+    --header-bg: rgba(253, 250, 246, 0.92);
+    --header-border: #1e1b2e;
+    
+    /* Stat Bars */
+    --stat-bar-bg: #e2d9eb;
+    --stat-bar-fill: #ffb800;
+}
+
+/* --------------------------------------------------------------------------
+   2. SYSTEM MEDIA QUERY DETECTION (prefers-color-scheme: dark)
+   Detects the user's default browser / OS theme automatically
+   -------------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --theme: "dark";
+        --bg-page: #0d0e17;
+        --text-primary: #f5f6fa;
+        --text-secondary: #c2c8d7;
+        --text-muted: #8892b0;
+
+        /* Pixel UI Colors (Night / Arcade Synthwave) */
+        --pixel-black: #06070a;
+        --pixel-white: #ffffff;
+        --pixel-card-bg: rgba(18, 20, 32, 0.92);
+        --pixel-dialog-bg: #141726;
+        --pixel-border-color: #06070a;
+        --pixel-shadow-color: #000000;
+        --pixel-bevel-light: #303754;
+        --pixel-bevel-dark: #0a0b12;
+
+        /* Vibrant Neon Accents in Night Mode */
+        --color-accent-gold: #ffd166;
+        --color-accent-pink: #ff2a85;
+        --color-accent-cyan: #00f0ff;
+        --color-accent-green: #00f5a0;
+        --color-accent-purple: #9d4edd;
+
+        /* Night Mode Hero Overlays (Deep Twilight / Neon Glow) */
+        --hero-bg-overlay: linear-gradient(
+            180deg, 
+            rgba(10, 11, 20, 0.82) 0%, 
+            rgba(20, 14, 38, 0.85) 60%, 
+            rgba(13, 14, 23, 0.95) 100%
+        );
+        --hero-scanline-opacity: 0.16;
+        --hero-title-shadow: 4px 4px 0px #ff2a85, 8px 8px 0px #00f0ff;
+        
+        /* Header & Nav */
+        --header-bg: rgba(13, 14, 23, 0.94);
+        --header-border: #06070a;
+
+        /* Stat Bars */
+        --stat-bar-bg: #1d2138;
+        --stat-bar-fill: #00f0ff;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3. MANUAL THEME OVERRIDES VIA DATA-THEME ATTRIBUTE
+   Supports user manual toggling via the Night Mode Toggle button
+   -------------------------------------------------------------------------- */
+[data-theme="light"] {
+    --theme: "light";
+    --bg-page: #fdfaf6;
+    --text-primary: #1e1b2e;
+    --text-secondary: #4a4563;
+    --text-muted: #746d8d;
+    --pixel-card-bg: rgba(255, 255, 255, 0.94);
+    --pixel-dialog-bg: #fffdfa;
+    --pixel-border-color: #1e1b2e;
+    --pixel-shadow-color: #2a2438;
+    --pixel-bevel-light: #ffffff;
+    --pixel-bevel-dark: #cfc6d9;
+    --hero-bg-overlay: linear-gradient(
+        135deg, 
+        rgba(255, 240, 225, 0.65) 0%, 
+        rgba(255, 220, 200, 0.55) 50%, 
+        rgba(240, 245, 255, 0.70) 100%
+    );
+    --hero-scanline-opacity: 0.08;
+    --hero-title-shadow: 4px 4px 0px #ff3377, 8px 8px 0px #1e1b2e;
+    --header-bg: rgba(253, 250, 246, 0.92);
+    --header-border: #1e1b2e;
+    --stat-bar-bg: #e2d9eb;
+    --stat-bar-fill: #ffb800;
+}
+
+[data-theme="dark"] {
+    --theme: "dark";
+    --bg-page: #0d0e17;
+    --text-primary: #f5f6fa;
+    --text-secondary: #c2c8d7;
+    --text-muted: #8892b0;
+    --pixel-card-bg: rgba(18, 20, 32, 0.92);
+    --pixel-dialog-bg: #141726;
+    --pixel-border-color: #06070a;
+    --pixel-shadow-color: #000000;
+    --pixel-bevel-light: #303754;
+    --pixel-bevel-dark: #0a0b12;
+    --hero-bg-overlay: linear-gradient(
+        180deg, 
+        rgba(10, 11, 20, 0.82) 0%, 
+        rgba(20, 14, 38, 0.85) 60%, 
+        rgba(13, 14, 23, 0.95) 100%
+    );
+    --hero-scanline-opacity: 0.16;
+    --hero-title-shadow: 4px 4px 0px #ff2a85, 8px 8px 0px #00f0ff;
+    --header-bg: rgba(13, 14, 23, 0.94);
+    --header-border: #06070a;
+    --stat-bar-bg: #1d2138;
+    --stat-bar-fill: #00f0ff;
+}
+
+/* --------------------------------------------------------------------------
+   4. BASE & TYPOGRAPHY RESETS
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+}
+
+/* Pixel Fonts */
+.font-pixel,
+.pixel-brand,
+.pixel-btn,
+.pixel-badge,
+.pixel-tag,
+.pixel-nav-link,
+.stat-name,
+.stat-value,
+.speech-bubble-speaker {
+    font-family: 'Press Start 2P', 'Silkscreen', monospace;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   5. REUSABLE PIXEL ART UTILITIES & BORDERS
+   Authentic 8-bit / 16-bit chunky pixel frames and shadows
+   -------------------------------------------------------------------------- */
+.pixel-box {
+    background-color: var(--pixel-dialog-bg);
+    border: 4px solid var(--pixel-border-color);
+    box-shadow: 
+        inset -4px -4px 0px 0px var(--pixel-bevel-dark),
+        inset 4px 4px 0px 0px var(--pixel-bevel-light),
+        6px 6px 0px 0px var(--pixel-shadow-color);
+    position: relative;
+}
+
+.pixel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0.8rem;
+    background-color: var(--pixel-dialog-bg);
+    color: var(--text-primary);
+    border: 3px solid var(--pixel-border-color);
+    box-shadow: 3px 3px 0px var(--pixel-shadow-color);
+}
+
+.pixel-badge.status-badge {
+    background-color: var(--pixel-dialog-bg);
+    border-color: var(--color-accent-green);
+    color: var(--text-primary);
+}
+
+.pixel-dot-pulse {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-accent-green);
+    box-shadow: 0 0 8px var(--color-accent-green);
+    animation: pixelBlink 1.4s infinite steps(2);
+}
+
+@keyframes pixelBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+
+/* --------------------------------------------------------------------------
+   5.1. ACCESSIBILITY SKIP LINK
+   -------------------------------------------------------------------------- */
+.skip-link {
+    position: absolute;
+    top: -120px;
+    left: 1.5rem;
+    z-index: 99999;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-accent-gold);
+    color: #121020;
+    border: 3px solid var(--pixel-border-color);
+    box-shadow: 4px 4px 0 var(--pixel-shadow-color);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+    top: 1.5rem;
+    outline: 3px dashed var(--color-accent-pink);
+    outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   6. SITE LAYOUT & LEFT VERTICAL NAVBAR
+   Desktop has fixed left navbar with content offset on the right
+   -------------------------------------------------------------------------- */
+.site-wrapper {
+    margin-left: 270px;
+    width: calc(100% - 270px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* Mobile Top Header (hidden on desktop, visible on <= 991px) */
+.mobile-top-bar {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.25rem;
+    background-color: var(--header-bg);
+    border-bottom: 4px solid var(--pixel-border-color);
+    box-shadow: 0 4px 0 0 var(--pixel-shadow-color);
+    position: sticky;
+    top: 0;
+    z-index: 950;
+    backdrop-filter: blur(8px);
+}
+
+.mobile-brand {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.mobile-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.mobile-theme-btn {
+    padding: 0.45rem 0.65rem;
+    font-size: 0.85rem;
+}
+
+.mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.65rem;
+}
+
+.pixel-hamburger-box {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 14px;
+}
+
+.pixel-hamburger-line {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: currentColor;
+}
+
+/* Mobile Backdrop */
+.sidebar-backdrop {
+    display: none;
+}
+
+/* Left-Side Vertical Navbar */
+.vertical-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 270px;
+    height: 100vh;
+    background-color: var(--pixel-dialog-bg);
+    border-right: 4px solid var(--pixel-border-color);
+    box-shadow: 4px 0 0 0 var(--pixel-shadow-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.25rem 1rem;
+    z-index: 1000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--pixel-border-color) var(--pixel-card-bg);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.vertical-navbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.vertical-navbar::-webkit-scrollbar-thumb {
+    background: var(--pixel-border-color);
+}
+
+/* Sidebar Brand Header */
+.sidebar-brand-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 3px dashed var(--pixel-bevel-dark);
+}
+
+.sidebar-brand-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.sidebar-avatar-wrap {
+    width: 44px;
+    height: 44px;
+    border: 3px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 0 var(--pixel-shadow-color);
+    overflow: hidden;
+    background-color: var(--pixel-black);
+    flex-shrink: 0;
+}
+
+.sidebar-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+}
+
+.sidebar-brand-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.sidebar-brand-title {
+    font-size: 0.72rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.15s ease;
+}
+
+.sidebar-brand-title:hover {
+    color: var(--color-accent-pink);
+}
+
+.sidebar-brand-badge {
+    font-size: 0.52rem;
+    color: var(--color-accent-pink);
+    letter-spacing: 0.05em;
+}
+
+.sidebar-close-btn {
+    display: none;
+    font-size: 1.1rem;
+    padding: 0.25rem 0.55rem;
+    line-height: 1;
+}
+
+/* Sidebar Navigation Menu Links */
+.sidebar-menu-wrapper {
+    flex-grow: 1;
+    margin: 1rem 0;
+    overflow-y: auto;
+}
+
+.sidebar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu-item {
+    width: 100%;
+}
+
+.sidebar-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 0.85rem;
+    border: 2px solid transparent;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-family: 'Silkscreen', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    user-select: none;
+    transition: transform 0.1s ease, background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.1s ease;
+}
+
+.nav-item-body {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.nav-pixel-icon {
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.pixel-nav-indicator {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+/* Hover State */
+.sidebar-nav-link:hover {
+    background-color: var(--pixel-card-bg);
+    border-color: var(--pixel-border-color);
+    color: var(--text-primary);
+    transform: translateX(4px);
+    box-shadow: 3px 3px 0 0 var(--pixel-shadow-color);
+}
+
+.sidebar-nav-link:hover .pixel-nav-indicator {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--color-accent-pink);
+}
+
+/* Active / Current Page State */
+.sidebar-nav-link.active,
+.sidebar-nav-link[aria-current="page"] {
+    background-color: var(--color-accent-pink);
+    border-color: var(--pixel-border-color);
+    color: #ffffff;
+    box-shadow: 4px 4px 0 0 var(--pixel-shadow-color);
+    transform: translateX(4px);
+}
+
+.sidebar-nav-link.active .pixel-nav-indicator,
+.sidebar-nav-link[aria-current="page"] .pixel-nav-indicator {
+    opacity: 1;
+    color: #ffffff;
+    transform: translateX(0);
+    animation: blinkSelector 1s infinite steps(2);
+}
+
+@keyframes blinkSelector {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+
+/* Accessibility Focus Visible */
+.sidebar-nav-link:focus-visible {
+    outline: 3px dashed var(--color-accent-cyan);
+    outline-offset: 2px;
+}
+
+/* Sidebar Footer & Theme Toggle */
+.sidebar-footer-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 3px dashed var(--pixel-bevel-dark);
+    margin-top: auto;
+}
+
+.sidebar-status-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.58rem;
+    color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   7. PIXEL NIGHT MODE TOGGLE BUTTON
+   Supports automatic media-query detection & interactive toggling
+   -------------------------------------------------------------------------- */
+.theme-toggle-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    background-color: var(--pixel-dialog-bg);
+    color: var(--text-primary);
+    border: 3px solid var(--pixel-border-color);
+    box-shadow: 3px 3px 0px var(--pixel-shadow-color);
+    font-family: 'Silkscreen', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--color-accent-gold);
+    color: #121020;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px var(--pixel-shadow-color);
+}
+
+.theme-toggle-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px var(--pixel-shadow-color);
+}
+
+.theme-toggle-icon {
+    font-size: 0.9rem;
+    line-height: 1;
+    display: inline-block;
+}
+
+/* Dynamic icon switching via CSS prefers-color-scheme */
+.icon-moon {
+    display: inline-block;
+}
+.icon-sun {
+    display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .icon-moon { display: none; }
+    .icon-sun { display: inline-block; }
+}
+
+/* When manually toggled via data-theme attribute */
+[data-theme="light"] .icon-moon { display: inline-block !important; }
+[data-theme="light"] .icon-sun { display: none !important; }
+[data-theme="dark"] .icon-moon { display: none !important; }
+[data-theme="dark"] .icon-sun { display: inline-block !important; }
+
+/* --------------------------------------------------------------------------
+   8. HERO SECTION - PIXEL ART STYLE & BACKGROUND IMAGE
+   -------------------------------------------------------------------------- */
+.hero-section {
+    position: relative;
+    min-height: calc(100vh - 65px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    overflow: hidden;
+
+    /* Background image provided by the user (Sunset Beach Scene) */
+    background-image: var(--hero-bg-overlay), url('hero-bg.jpg');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background 0.4s ease;
+}
+
+/* Pixel Art CRT Scanline / Dither Overlay */
+.hero-pixel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+        rgba(18, 16, 32, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+    );
+    background-size: 100% 4px;
+    opacity: var(--hero-scanline-opacity);
+    z-index: 1;
+}
+
+/* Floating Retro Pixel Star / Sparkle elements */
+.pixel-decorations {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.pixel-star {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-accent-gold);
+    box-shadow: 
+        0 -4px 0 0 var(--color-accent-gold),
+        0 4px 0 0 var(--color-accent-gold),
+        -4px 0 0 0 var(--color-accent-gold),
+        4px 0 0 0 var(--color-accent-gold);
+    animation: starFloat 3s infinite ease-in-out;
+}
+
+.star-1 { top: 15%; left: 10%; animation-delay: 0s; }
+.star-2 { top: 25%; right: 12%; animation-delay: 1.2s; }
+.star-3 { bottom: 20%; left: 18%; animation-delay: 0.7s; }
+.star-4 { top: 70%; right: 20%; animation-delay: 1.8s; }
+
+@keyframes starFloat {
+    0%, 100% { transform: translateY(0px) scale(1); opacity: 0.8; }
+    50% { transform: translateY(-8px) scale(1.15); opacity: 1; }
+}
+
+/* Hero Content Grid */
+.hero-container {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+/* Hero Left Column (Welcome, Title, Tagline, Actions) */
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.hero-meta-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.hero-greeting {
+    font-size: 0.8rem;
+    color: var(--color-accent-pink);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+/* Hero Title with 3D Pixel Shadow */
+.hero-name {
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    font-weight: 900;
+    color: var(--text-primary);
+    text-shadow: var(--hero-title-shadow);
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    margin: 0.25rem 0;
+    word-break: break-word;
+}
+
+.hero-role {
+    font-family: 'Silkscreen', monospace;
+    font-size: clamp(0.95rem, 1.8vw, 1.25rem);
+    color: var(--color-accent-purple);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Tagline RPG Dialog Box */
+.hero-dialogue-box {
+    padding: 1.35rem 1.6rem;
+    max-width: 580px;
+    line-height: 1.7;
+}
+
+.speech-bubble-speaker {
+    display: inline-block;
+    font-size: 0.65rem;
+    color: var(--color-accent-pink);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.08em;
+}
+
+.hero-tagline {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.cursor-blink {
+    display: inline-block;
+    color: var(--color-accent-green);
+    font-weight: 900;
+    animation: cursorFlash 1s infinite steps(2);
+}
+
+@keyframes cursorFlash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Hero Action Buttons (Pixel Style) */
+.hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.pixel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.85rem 1.4rem;
+    border: 3px solid var(--pixel-border-color);
+    box-shadow: 4px 4px 0px 0px var(--pixel-shadow-color);
+    cursor: pointer;
+    user-select: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.pixel-btn-primary {
+    background-color: var(--color-accent-pink);
+    color: #ffffff;
+}
+
+.pixel-btn-primary:hover {
+    background-color: #ff0055;
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px var(--pixel-shadow-color);
+}
+
+.pixel-btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px var(--pixel-shadow-color);
+}
+
+.pixel-btn-secondary {
+    background-color: var(--color-accent-gold);
+    color: #1a1a2e;
+}
+
+.pixel-btn-secondary:hover {
+    background-color: #ffc820;
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px var(--pixel-shadow-color);
+}
+
+.pixel-btn-secondary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px var(--pixel-shadow-color);
+}
+
+.pixel-btn-outline {
+    background-color: var(--pixel-dialog-bg);
+    color: var(--text-primary);
+}
+
+.pixel-btn-outline:hover {
+    background-color: var(--color-accent-cyan);
+    color: #121020;
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px var(--pixel-shadow-color);
+}
+
+.pixel-btn-outline:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px var(--pixel-shadow-color);
+}
+
+/* Hero Tech Badges */
+.hero-tech-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.tech-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+.pixel-tag {
+    font-size: 0.6rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--pixel-card-bg);
+    border: 2px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0px var(--pixel-shadow-color);
+    color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   9. HERO RIGHT COLUMN: PIXEL CHARACTER CARD
+   Showcases user photo with 8-bit RPG character frame & live stats
+   -------------------------------------------------------------------------- */
+.hero-character-card {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.character-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px dashed var(--pixel-bevel-dark);
+    padding-bottom: 0.75rem;
+}
+
+.character-name-badge {
+    font-size: 0.7rem;
+    color: var(--text-primary);
+}
+
+.character-level-badge {
+    font-size: 0.65rem;
+    color: var(--color-accent-pink);
+}
+
+/* Pixel Avatar Frame */
+.character-avatar-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 280px;
+    border: 4px solid var(--pixel-border-color);
+    box-shadow: inset 0 0 0 3px var(--pixel-bevel-dark);
+    overflow: hidden;
+    background-color: var(--pixel-black);
+}
+
+.character-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+    image-rendering: auto;
+    filter: contrast(1.05) saturate(1.05);
+    transition: transform 0.3s ease;
+}
+
+.hero-character-card:hover .character-avatar-img {
+    transform: scale(1.03);
+}
+
+.avatar-corner-deco {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-accent-gold);
+    border: 2px solid var(--pixel-border-color);
+    z-index: 2;
+}
+
+.corner-tl { top: 0; left: 0; }
+.corner-tr { top: 0; right: 0; }
+.corner-bl { bottom: 0; left: 0; }
+.corner-br { bottom: 0; right: 0; }
+
+/* Character RPG Stats */
+.character-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.stat-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.stat-label-wrap {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.62rem;
+}
+
+.stat-name {
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    color: var(--color-accent-green);
+}
+
+.stat-progress-bar {
+    width: 100%;
+    height: 12px;
+    background-color: var(--stat-bar-bg);
+    border: 2px solid var(--pixel-border-color);
+    overflow: hidden;
+    position: relative;
+}
+
+.stat-progress-fill {
+    height: 100%;
+    background-color: var(--stat-bar-fill);
+    background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.25),
+        rgba(255, 255, 255, 0.25) 4px,
+        transparent 4px,
+        transparent 8px
+    );
+    border-right: 2px solid var(--pixel-border-color);
+    transition: width 1s ease-in-out;
+}
+
+/* --------------------------------------------------------------------------
+   10. OTHER PORTFOLIO SECTIONS (Basic Clean Foundations)
+   -------------------------------------------------------------------------- */
+.section {
+    padding: 5rem 1.5rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.section-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.site-footer {
+    border-top: 4px solid var(--header-border);
+    padding: 2.5rem 1.5rem;
+    background-color: var(--header-bg);
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.footer-top, .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-brand {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.8rem;
+    color: var(--text-primary);
+}
+
+.back-to-top {
+    font-family: 'Silkscreen', monospace;
+    font-size: 0.75rem;
+    text-decoration: none;
+    color: var(--color-accent-pink);
+    border: 2px solid var(--pixel-border-color);
+    padding: 0.4rem 0.8rem;
+    background-color: var(--pixel-dialog-bg);
+    box-shadow: 2px 2px 0px var(--pixel-shadow-color);
+}
+
+/* --------------------------------------------------------------------------
+   10. ABOUT ME SECTION (Clean, Minimalist Pixel Art Style)
+   -------------------------------------------------------------------------- */
+.section-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.65rem;
+    color: var(--color-accent-pink);
+    padding: 0.35rem 0.75rem;
+    background-color: var(--pixel-card-bg);
+    border: 2px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 var(--pixel-shadow-color);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+/* Left Avatar Card */
+.about-avatar-card {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    background-color: var(--pixel-dialog-bg);
+}
+
+.avatar-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 4px solid var(--pixel-border-color);
+    box-shadow: inset 0 0 0 3px var(--pixel-bevel-dark);
+    overflow: hidden;
+    background-color: var(--pixel-black);
+}
+
+.about-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.about-avatar-card:hover .about-avatar-img {
+    transform: scale(1.03);
+}
+
+.avatar-tag {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    font-size: 0.55rem;
+    background-color: var(--color-accent-pink);
+    color: #ffffff;
+    padding: 0.25rem 0.5rem;
+    border: 2px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 var(--pixel-shadow-color);
+}
+
+.avatar-card-info {
+    text-align: center;
+}
+
+.avatar-name {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+}
+
+.avatar-role {
+    font-size: 0.6rem;
+    color: var(--color-accent-purple);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+}
+
+.avatar-location {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+}
+
+.about-quick-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 2px dashed var(--pixel-bevel-dark);
+}
+
+.metric-item {
+    text-align: center;
+    background-color: var(--pixel-card-bg);
+    padding: 0.6rem 0.3rem;
+    border: 2px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 var(--pixel-shadow-color);
+}
+
+.metric-val {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-accent-green);
+    margin-bottom: 0.25rem;
+}
+
+.metric-lbl {
+    display: block;
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    line-height: 1.2;
+}
+
+/* Right Content Column */
+.about-details-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.about-bio-card {
+    padding: 1.75rem;
+    background-color: var(--pixel-dialog-bg);
+}
+
+.card-label {
+    font-size: 0.62rem;
+    color: var(--color-accent-pink);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.08em;
+}
+
+.bio-lead {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin-bottom: 0.85rem;
+}
+
+.bio-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+/* Two Column Highlights & Interests */
+.about-columns-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.about-info-card {
+    padding: 1.5rem;
+    background-color: var(--pixel-dialog-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card-header-line {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom: 2px dashed var(--pixel-bevel-dark);
+    padding-bottom: 0.6rem;
+}
+
+.card-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.card-title {
+    font-size: 0.72rem;
+    color: var(--text-primary);
+}
+
+.highlights-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.highlights-list li {
+    position: relative;
+    padding-left: 1.25rem;
+}
+
+.highlights-list li::before {
+    content: "▶";
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    color: var(--color-accent-pink);
+}
+
+.interests-tags-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.interest-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.45rem 0.75rem;
+    background-color: var(--pixel-card-bg);
+    border: 2px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 var(--pixel-shadow-color);
+    color: var(--text-primary);
+    transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.interest-pill:hover {
+    transform: translate(-1px, -1px);
+    background-color: var(--color-accent-gold);
+    color: #121020;
+    box-shadow: 3px 3px 0 var(--pixel-shadow-color);
+}
+
+.about-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   10.0. SKILLS SECTION (Pixel Art Skill Tree & Progress Bars)
+   -------------------------------------------------------------------------- */
+.skills-filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 2.75rem;
+}
+
+.skill-tab-btn {
+    font-size: 0.65rem;
+    padding: 0.55rem 0.95rem;
+    background-color: var(--pixel-dialog-bg);
+    color: var(--text-secondary);
+    border: 3px solid var(--pixel-border-color);
+    box-shadow: 3px 3px 0 var(--pixel-shadow-color);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+}
+
+.skill-tab-btn:hover {
+    background-color: var(--color-accent-gold);
+    color: #121020;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--pixel-shadow-color);
+}
+
+.skill-tab-btn.active,
+.skill-tab-btn[aria-selected="true"] {
+    background-color: var(--color-accent-pink);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--pixel-shadow-color);
+}
+
+.skills-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.skill-category-card {
+    padding: 1.75rem;
+    background-color: var(--pixel-dialog-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.25s ease;
+}
+
+.skill-category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        inset -4px -4px 0px 0px var(--pixel-bevel-dark),
+        inset 4px 4px 0px 0px var(--pixel-bevel-light),
+        8px 8px 0px 0px var(--pixel-shadow-color);
+}
+
+.category-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    border-bottom: 3px dashed var(--pixel-bevel-dark);
+    padding-bottom: 0.85rem;
+}
+
+.category-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: var(--pixel-card-bg);
+    border: 3px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 var(--pixel-shadow-color);
+}
+
+.category-title {
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.category-subtitle {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.skills-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Individual Skill Meter Item */
+.skill-meter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0.85rem 0.95rem;
+    background-color: var(--pixel-card-bg);
+    border: 2px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 var(--pixel-shadow-color);
+    cursor: default;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.skill-meter-item:hover,
+.skill-meter-item:focus-visible {
+    transform: translateX(5px);
+    border-color: var(--color-accent-pink);
+    box-shadow: 4px 4px 0 var(--pixel-shadow-color);
+    outline: none;
+}
+
+.skill-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.skill-name-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.skill-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.skill-name {
+    font-size: 0.75rem;
+    color: var(--text-primary);
+}
+
+.skill-level {
+    font-size: 0.65rem;
+    color: var(--color-accent-green);
+    letter-spacing: 0.05em;
+}
+
+/* Pixel Progress Bar */
+.pixel-progress-track {
+    width: 100%;
+    height: 14px;
+    background-color: var(--stat-bar-bg);
+    border: 2px solid var(--pixel-border-color);
+    overflow: hidden;
+    position: relative;
+}
+
+.pixel-progress-fill {
+    height: 100%;
+    width: var(--skill-width, 0%);
+    background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3) 5px,
+        transparent 5px,
+        transparent 10px
+    );
+    border-right: 2px solid var(--pixel-border-color);
+    transition: width 1s ease-in-out, filter 0.2s ease;
+}
+
+.skill-meter-item:hover .pixel-progress-fill,
+.skill-meter-item:focus-visible .pixel-progress-fill {
+    animation: stripeShift 0.8s linear infinite;
+    filter: brightness(1.15) saturate(1.1);
+}
+
+@keyframes stripeShift {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 0; }
+}
+
+.color-gold { background-color: var(--color-accent-gold); }
+.color-cyan { background-color: var(--color-accent-cyan); }
+.color-pink { background-color: var(--color-accent-pink); }
+.color-green { background-color: var(--color-accent-green); }
+
+.skill-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+}
+
+/* Core Engineering Principles Banner */
+.skills-core-banner {
+    padding: 1.75rem 2rem;
+    background-color: var(--pixel-dialog-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.core-banner-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 2px dashed var(--pixel-bevel-dark);
+    padding-bottom: 0.75rem;
+}
+
+.badge-icon {
+    font-size: 1.3rem;
+}
+
+.core-banner-title {
+    font-size: 0.78rem;
+    color: var(--text-primary);
+}
+
+.core-badges-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+}
+
+.core-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.55rem 0.95rem;
+    background-color: var(--pixel-card-bg);
+    border: 2px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 var(--pixel-shadow-color);
+    color: var(--text-primary);
+    transition: transform 0.1s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.core-badge:hover {
+    transform: translate(-2px, -2px);
+    background-color: var(--color-accent-gold);
+    color: #121020;
+    box-shadow: 4px 4px 0 var(--pixel-shadow-color);
+}
+
+.badge-dot {
+    width: 7px;
+    height: 7px;
+    background-color: var(--color-accent-green);
+    display: inline-block;
+    box-shadow: 0 0 6px var(--color-accent-green);
+}
+
+/* --------------------------------------------------------------------------
+   10.0.1. TIMELINE SECTION (Minimalistic Rounded Cards & Smooth Transitions)
+   -------------------------------------------------------------------------- */
+.timeline-filter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.timeline-filter-btn {
+    font-size: 0.65rem;
+    padding: 0.55rem 0.95rem;
+    background-color: var(--pixel-dialog-bg);
+    color: var(--text-secondary);
+    border: 3px solid var(--pixel-border-color);
+    box-shadow: 3px 3px 0 var(--pixel-shadow-color);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+}
+
+.timeline-filter-btn:hover {
+    background-color: var(--color-accent-gold);
+    color: #121020;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--pixel-shadow-color);
+}
+
+.timeline-filter-btn.active,
+.timeline-filter-btn[aria-selected="true"] {
+    background-color: var(--color-accent-pink);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--pixel-shadow-color);
+}
+
+/* Timeline Track Spine */
+.timeline-track-container {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+    padding-left: 2.75rem;
+}
+
+.timeline-vertical-line {
+    position: absolute;
+    top: 1.5rem;
+    bottom: 2rem;
+    left: 17px;
+    width: 4px;
+    background: linear-gradient(
+        180deg, 
+        var(--color-accent-pink) 0%, 
+        var(--color-accent-cyan) 45%, 
+        var(--color-accent-gold) 85%,
+        var(--color-accent-green) 100%
+    );
+    box-shadow: 2px 0 0 var(--pixel-border-color);
+    border-radius: 4px;
+}
+
+.timeline-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Timeline Entry Item */
+.timeline-entry {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.timeline-node {
+    position: absolute;
+    left: -2.75rem;
+    top: 1.25rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: var(--pixel-dialog-bg);
+    border: 3px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 var(--pixel-shadow-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.node-icon {
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+.timeline-entry:hover .timeline-node,
+.timeline-entry:focus-within .timeline-node {
+    transform: scale(1.18);
+    border-color: var(--color-accent-pink);
+    background-color: var(--pixel-card-bg);
+    box-shadow: 0 0 12px rgba(255, 51, 119, 0.45);
+}
+
+/* Rounded Minimalistic Timeline Card */
+.timeline-card-rounded {
+    position: relative;
+    width: 100%;
+    border-radius: 14px;
+    padding: 1.65rem 1.85rem;
+    background-color: var(--pixel-dialog-bg);
+    border: 2px solid var(--pixel-border-color);
+    box-shadow: 4px 4px 0 var(--pixel-shadow-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    cursor: default;
+    overflow: hidden;
+    /* Smooth CSS transitions for hover */
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.25s ease, 
+                background-color 0.25s ease;
+}
+
+/* Subtle accent highlight on hover */
+.timeline-card-rounded::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--color-accent-pink), var(--color-accent-cyan));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+}
+
+/* Smooth Hover Effect & Focus Accessibility */
+.timeline-card-rounded:hover,
+.timeline-card-rounded:focus-within,
+.timeline-card-rounded:focus-visible {
+    transform: translateY(-5px);
+    border-color: var(--color-accent-pink);
+    box-shadow: 
+        0 14px 28px rgba(0, 0, 0, 0.09),
+        6px 6px 0 var(--pixel-shadow-color);
+    outline: none;
+}
+
+.timeline-card-rounded:hover::before,
+.timeline-card-rounded:focus-within::before,
+.timeline-card-rounded:focus-visible::before {
+    opacity: 1;
+}
+
+[data-theme="dark"] .timeline-card-rounded:hover,
+[data-theme="dark"] .timeline-card-rounded:focus-within,
+[data-theme="dark"] .timeline-card-rounded:focus-visible {
+    box-shadow: 
+        0 14px 28px rgba(0, 0, 0, 0.45),
+        6px 6px 0 var(--color-accent-pink);
+}
+
+/* Card Header */
+.timeline-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    border-bottom: 1px dashed var(--pixel-bevel-dark);
+    padding-bottom: 0.75rem;
+}
+
+.timeline-type-pill {
+    font-size: 0.62rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    border: 2px solid var(--pixel-border-color);
+    letter-spacing: 0.06em;
+    font-weight: 700;
+}
+
+.pill-education {
+    background-color: rgba(0, 188, 212, 0.12);
+    color: var(--color-accent-cyan);
+    border-color: var(--color-accent-cyan);
+}
+
+.pill-project {
+    background-color: rgba(255, 51, 119, 0.12);
+    color: var(--color-accent-pink);
+    border-color: var(--color-accent-pink);
+}
+
+.pill-leadership {
+    background-color: rgba(255, 184, 0, 0.14);
+    color: var(--color-accent-gold);
+    border-color: var(--color-accent-gold);
+}
+
+.timeline-period {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+/* Typography Inside Card */
+.timeline-entry-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.35;
+    transition: color 0.2s ease;
+}
+
+.timeline-card-rounded:hover .timeline-entry-title {
+    color: var(--color-accent-pink);
+}
+
+.timeline-organization {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-accent-purple);
+}
+
+.timeline-summary {
+    font-size: 0.94rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+/* Rounded Tech Pills */
+.timeline-tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+}
+
+.rounded-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.25rem 0.7rem;
+    border-radius: 12px;
+    background-color: var(--pixel-card-bg);
+    border: 1.5px solid var(--pixel-border-color);
+    box-shadow: 1.5px 1.5px 0 var(--pixel-shadow-color);
+    color: var(--text-primary);
+    transition: transform 0.12s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.rounded-tag:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-accent-gold);
+    color: #121020;
+}
+
+/* --------------------------------------------------------------------------
+   10.1. TESTIMONIALS SECTION (Pixel Art Style)
+   -------------------------------------------------------------------------- */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.testimonial-card {
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+    background-color: var(--pixel-dialog-bg);
+}
+
+.testimonial-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.testimonial-avatar {
+    font-size: 1.5rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: var(--pixel-card-bg);
+    border: 3px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 var(--pixel-shadow-color);
+}
+
+.testimonial-author {
+    font-size: 0.75rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.testimonial-role {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.testimonial-quote {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.pixel-stars-rating {
+    color: var(--color-accent-gold);
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+}
+
+/* --------------------------------------------------------------------------
+   10.2. CHAT ASSISTANT SECTION (8-Bit Terminal Style)
+   -------------------------------------------------------------------------- */
+.chat-terminal {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--pixel-dialog-bg);
+    overflow: hidden;
+}
+
+.terminal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--pixel-black);
+    color: #ffffff;
+    border-bottom: 3px solid var(--pixel-border-color);
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.terminal-dots .dot {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border: 1px solid #000;
+}
+.dot-red { background-color: #ff5555; }
+.dot-yellow { background-color: #ffb800; }
+.dot-green { background-color: #50fa7b; }
+
+.terminal-title {
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    color: #f1fa8c;
+}
+
+.terminal-status {
+    font-size: 0.58rem;
+    color: var(--color-accent-green);
+}
+
+.chat-messages {
+    min-height: 220px;
+    max-height: 380px;
+    overflow-y: auto;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .chat-messages {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.chat-msg {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    max-width: 85%;
+}
+
+.bot-msg {
+    align-self: flex-start;
+}
+
+.user-msg {
+    align-self: flex-end;
+}
+
+.user-msg .msg-speaker {
+    color: var(--color-accent-cyan);
+    text-align: right;
+}
+
+.msg-speaker {
+    font-size: 0.62rem;
+    color: var(--color-accent-pink);
+    letter-spacing: 0.05em;
+}
+
+.msg-text {
+    padding: 0.75rem 1rem;
+    background-color: var(--pixel-card-bg);
+    border: 2px solid var(--pixel-border-color);
+    box-shadow: 2px 2px 0 var(--pixel-shadow-color);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.chat-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-top: 2px dashed var(--pixel-bevel-dark);
+    background-color: var(--pixel-card-bg);
+}
+
+.quick-chip {
+    font-size: 0.65rem;
+    padding: 0.4rem 0.75rem;
+    background-color: var(--pixel-dialog-bg);
+}
+
+.chat-input-bar {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    background-color: var(--pixel-dialog-bg);
+    border-top: 3px solid var(--pixel-border-color);
+}
+
+.input-wrapper {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--pixel-card-bg);
+    border: 2px solid var(--pixel-border-color);
+    padding: 0.4rem 0.75rem;
+}
+
+.prompt-sign {
+    color: var(--color-accent-pink);
+    font-size: 0.8rem;
+}
+
+.chat-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 0.78rem;
+}
+
+.chat-send-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.7rem;
+}
+
+/* --------------------------------------------------------------------------
+   11. RESPONSIVE DESIGN (Tablets & Mobile Screens)
+   -------------------------------------------------------------------------- */
+@media (max-width: 991px) {
+    /* Main Content Wrapper fills full width on small screens */
+    .site-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    /* Mobile Header appears */
+    .mobile-top-bar {
+        display: flex;
+    }
+
+    /* Left Navbar becomes a slide-out drawer */
+    .vertical-navbar {
+        width: 280px;
+        max-width: 85vw;
+        transform: translateX(-100%);
+        z-index: 1100;
+        box-shadow: 6px 0 0 0 var(--pixel-shadow-color);
+    }
+
+    .vertical-navbar.is-open {
+        transform: translateX(0);
+    }
+
+    .sidebar-close-btn {
+        display: inline-flex;
+    }
+
+    /* Mobile Backdrop */
+    .sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.72);
+        backdrop-filter: blur(3px);
+        z-index: 1050;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+
+    .sidebar-backdrop.is-active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Hero section centering on tablets */
+    .hero-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    .hero-content {
+        align-items: center;
+    }
+
+    .hero-role {
+        justify-content: center;
+    }
+
+    .hero-dialogue-box {
+        text-align: left;
+    }
+
+    .hero-cta-group {
+        justify-content: center;
+    }
+
+    .hero-tech-strip {
+        justify-content: center;
+    }
+
+    .character-avatar-wrapper {
+        max-height: 240px;
+    }
+
+    /* About section responsive tablet adjustments */
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .about-avatar-card {
+        max-width: 360px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .about-columns-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .hero-name {
+        font-size: 1.6rem;
+    }
+
+    .hero-cta-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .about-cta-row {
+        flex-direction: column;
+    }
+
+    .about-cta-row .pixel-btn {
+        width: 100%;
+    }
+
+    .about-quick-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-cta-group .pixel-btn,
+    .about-cta-row .pixel-btn {
+        width: 100%;
+    }
+
+    /* Filter buttons on mobile */
+    .skills-filter-tabs,
+    .timeline-filter-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .skill-tab-btn,
+    .timeline-filter-btn {
+        width: auto !important;
+        font-size: 0.58rem;
+        padding: 0.45rem 0.75rem;
+    }
+
+    /* Timeline mobile responsiveness */
+    .timeline-track-container {
+        padding-left: 2.2rem;
+    }
+
+    .timeline-vertical-line {
+        left: 14px;
+    }
+
+    .timeline-node {
+        left: -2.2rem;
+        width: 32px;
+        height: 32px;
+    }
+
+    .node-icon {
+        font-size: 0.85rem;
+    }
+
+    .timeline-card-rounded {
+        padding: 1.25rem 1.15rem;
+        border-radius: 12px;
+    }
+
+    .timeline-entry-title {
+        font-size: 1.02rem;
+    }
+
+    .timeline-summary {
+        font-size: 0.88rem;
+    }
+
+    .chat-input-bar {
+        flex-direction: column;
+    }
+
+    .chat-send-btn {
+        width: 100%;
+    }
+}
+
